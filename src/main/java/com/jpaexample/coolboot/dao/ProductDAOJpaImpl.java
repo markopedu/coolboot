@@ -28,16 +28,20 @@ public class ProductDAOJpaImpl implements ProductDAO {
 
     @Override
     public Product findById(int theId) {
-        return null;
+      Product product = entityManager.find(Product.class, theId);
+      return product;
     }
 
     @Override
     public void save(Product product) {
-
+       Product dbProduct = entityManager.merge(product);
+       product.setId(dbProduct.getId());
     }
 
     @Override
     public void deleteById(int theId) {
-
+        Query query = entityManager.createQuery("delete from Product where id=:productId");
+        query.setParameter("productId", theId);
+        query.executeUpdate();
     }
 }

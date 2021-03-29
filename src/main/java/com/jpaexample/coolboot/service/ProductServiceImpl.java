@@ -27,16 +27,16 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Product findById(int theId) {
-        return null;
+        return productDAO.findById(theId);
     }
 
     @Override
     public void save(Product product) {
-
+        productDAO.save(product);
     }
 
     @Override
     public void deleteById(int theId) {
-
+        productDAO.deleteById(theId);
     }
 }
