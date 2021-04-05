@@ -51,6 +51,10 @@ public class Product {
         this.category = category;
     }
 
+    public static Product createEmpty() {
+        return new Product();
+    }
+
     public void setId(int id) {
         this.id = id;
     }
