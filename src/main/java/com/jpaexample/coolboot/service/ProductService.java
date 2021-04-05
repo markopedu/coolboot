@@ -5,9 +5,9 @@ import com.jpaexample.coolboot.entity.Product;
 import java.util.List;
 
 public interface ProductService {
-    public List<Product> findAll();
-    public List<Product> findByCategory(String category);
-    public Product findById(int theId);
-    public void save(Product product);
-    public void deleteById(int theId);
+    List<Product> findAll();
+    List<Product> findByCategory(String category);
+    Product findById(int theId);
+    void save(Product product);
+    void deleteById(int theId);
 }

@@ -4,7 +4,6 @@ import com.jpaexample.coolboot.entity.Product;
 import com.jpaexample.coolboot.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +20,6 @@ public class ProductServiceImpl implements ProductService{
 
 
     @Override
-    @Transactional
     public List<Product> findAll() {
         return productRepository.findAll();
     }
