@@ -3,6 +3,7 @@ package com.jpaexample.coolboot.service;
 import com.jpaexample.coolboot.entity.Product;
 import com.jpaexample.coolboot.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    @Async
     public CompletableFuture<List<Product>> findByCategory(String category) throws ExecutionException, InterruptedException {
        Future<List<Product>> future = productRepository.findByCategory(category);
        List<Product> products = null;
