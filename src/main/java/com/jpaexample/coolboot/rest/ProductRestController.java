@@ -34,6 +34,6 @@ public class ProductRestController {
 
     @GetMapping("/category/{category}")
     public List<Product> findByCategory(@PathVariable String category) throws ExecutionException, InterruptedException {
-        return productService.findByCategory(category);
+        return productService.findByCategory(category).get();
     }
 }
