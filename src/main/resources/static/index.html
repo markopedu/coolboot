@@ -3,8 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <title>Cool boot</title>
+    <style>
+        #product-list li i {
+            color: #666;
+            font-size: 16px;
+            font-family: monospace;
+            text-transform: uppercase;
+        }
+    </style>
 </head>
 <body>
     <h1>Cool boot</h1>
+
+    <form method="get" id="form-search-category">
+      <div style="display: flex;">
+        <div>
+            <input list="datalist-categories" type="text" id="category" value="">
+            <datalist id="datalist-categories">
+                <option value="Beverages" >
+                <option value="Condiments" >
+                <option value="Oil" >
+                <option value="Jams, Preserves" >
+                <option value="Dried Fruit & Nuts" >
+                <option value="Sauces" >
+                <option value="Canned Fruit & Vegetables" >
+                <option value="Baked Goods & Mixes" >
+                <option value="Canned Meat" >
+                <option value="Soups" >
+                <option value="Candy" >
+                <option value="Grains" >
+                <option value="Pasta" >
+                <option value="Dairy products" >
+                <option value="Cereal" >
+                <option value="Chips, Snacks" >
+            </datalist>
+        </div>
+        <div>
+            <button type="submit">Search</button>
+            <button id="clear">Clear</button>
+        </div>
+      </div>
+    </form>
+    <hr />
+    <div>
+        <ol id="product-list">
+
+        </ol>
+    </div>
+
+    <script>
+        (function () {
+
+            const clearBtn = document.querySelector('#clear');
+
+            if(clearBtn) {
+                clearBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelector('#category').value = "";
+                });
+            }
+
+            const searchForm = document.querySelector('#form-search-category');
+
+            if(searchForm) {
+
+                searchForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+
+                    const category = document.querySelector('#category').value;
+
+                    console.log('category: ', category);
+
+                    fetch(`/api/category/${category}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const productList = document.querySelector('#product-list');
+
+                            if(data)  {
+
+                                const productListItems = data.map(product => {
+                                    const { id, productName, category } = product;
+                                    return `<li>id: <i>${id}</i>,
+                                                name: <i>${productName}</i>,
+                                                category: <i>${category}</i>
+                                            </li>`;
+                                }).join('');
+
+                                productList.innerHTML = productListItems;
+                            }
+
+                        });
+                });
+
+            }
+
+
+        })();
+
+    </script>
+
 </body>
 </html>

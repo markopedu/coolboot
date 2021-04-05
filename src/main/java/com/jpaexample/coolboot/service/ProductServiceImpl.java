@@ -27,6 +27,11 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    public List<Product> findByCategory(String category) {
+        return productRepository.findByCategory(category);
+    }
+
+    @Override
     public Product findById(int theId) {
         Optional<Product> product = productRepository.findById(theId);
         return product.get();
