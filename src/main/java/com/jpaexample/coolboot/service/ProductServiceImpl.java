@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -25,8 +27,15 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> findByCategory(String category) {
-        return productRepository.findByCategory(category);
+    public List<Product> findByCategory(String category) throws ExecutionException, InterruptedException {
+       Future<List<Product>> future = productRepository.findByCategory(category);
+       List<Product> products = null;
+
+       if(future.isDone()) {
+            products = future.get();
+       }
+
+       return products;
     }
 
     @Override

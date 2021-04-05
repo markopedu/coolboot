@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/api")
@@ -32,7 +33,7 @@ public class ProductRestController {
     }
 
     @GetMapping("/category/{category}")
-    public List<Product> findByCategory(@PathVariable String category) {
+    public List<Product> findByCategory(@PathVariable String category) throws ExecutionException, InterruptedException {
         return productService.findByCategory(category);
     }
 }
