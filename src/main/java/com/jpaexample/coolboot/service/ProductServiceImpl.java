@@ -38,14 +38,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Product findById(int theId) {
-        Optional<Product> result = productRepository.findById(theId);
-        Product product = Product.createEmpty();
-
-        if(result.isPresent()) {
-            product = result.get();
-        }
-
-        return product;
+       return productRepository.findById(theId).orElseGet(() -> Product.createEmpty());
     }
 
     @Override

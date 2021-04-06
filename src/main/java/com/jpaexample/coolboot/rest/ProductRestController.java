@@ -3,12 +3,14 @@ package com.jpaexample.coolboot.rest;
 import com.jpaexample.coolboot.entity.Product;
 import com.jpaexample.coolboot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -33,7 +35,8 @@ public class ProductRestController {
     }
 
     @GetMapping("/category/{category}")
-    public List<Product> findByCategory(@PathVariable String category) throws ExecutionException, InterruptedException {
-        return productService.findByCategory(category).get();
+    @Async
+    public CompletableFuture<List<Product>> findByCategory(@PathVariable String category) throws ExecutionException, InterruptedException {
+        return productService.findByCategory(category);
     }
 }
