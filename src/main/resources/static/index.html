@@ -4,6 +4,25 @@
     <meta charset="UTF-8">
     <title>Cool boot</title>
     <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+        }
+
+        header {
+            width: 100%;
+            background: #dbecb4;
+            padding: 1rem 0;
+            position: relative;
+        }
+
+        header h1 {
+            text-align: center;
+            padding-bottom: 1rem;
+        }
+
+
         #product-list li {
             padding: 5px 0;
             border-bottom: 1px solid #4e0202;
@@ -15,45 +34,66 @@
             font-family: monospace;
             text-transform: uppercase;
         }
+
+        #quote-paragraph {
+            position: absolute;
+            bottom: 5px;
+            left: 10px;
+            font-style: italic;
+            font-family: "Avenir Next", sans-serif;
+            color: #db1c1c;
+        }
+
+        .container {
+            padding-top: .5rem;
+            width: 960px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
-    <h1>Cool boot</h1>
-
-    <form method="get" id="form-search-category">
-      <div style="display: flex;">
+    <header>
         <div>
-            <input list="datalist-categories" type="text" id="category" value="">
-            <datalist id="datalist-categories">
-                <option value="Beverages" >
-                <option value="Condiments" >
-                <option value="Oil" >
-                <option value="Jams, Preserves" >
-                <option value="Dried Fruit & Nuts" >
-                <option value="Sauces" >
-                <option value="Canned Fruit & Vegetables" >
-                <option value="Baked Goods & Mixes" >
-                <option value="Canned Meat" >
-                <option value="Soups" >
-                <option value="Candy" >
-                <option value="Grains" >
-                <option value="Pasta" >
-                <option value="Dairy products" >
-                <option value="Cereal" >
-                <option value="Chips, Snacks" >
-            </datalist>
+            <h1>Cool boot</h1>
+            <p id="quote-paragraph"></p>
         </div>
+    </header>
+    <div class="container">
+        <form method="get" id="form-search-category">
+            <div style="display: flex;">
+                <div>
+                    <input list="datalist-categories" type="text" id="category" value="">
+                    <datalist id="datalist-categories">
+                        <option value="Beverages" >
+                        <option value="Condiments" >
+                        <option value="Oil" >
+                        <option value="Jams, Preserves" >
+                        <option value="Dried Fruit & Nuts" >
+                        <option value="Sauces" >
+                        <option value="Canned Fruit & Vegetables" >
+                        <option value="Baked Goods & Mixes" >
+                        <option value="Canned Meat" >
+                        <option value="Soups" >
+                        <option value="Candy" >
+                        <option value="Grains" >
+                        <option value="Pasta" >
+                        <option value="Dairy products" >
+                        <option value="Cereal" >
+                        <option value="Chips, Snacks" >
+                    </datalist>
+                </div>
+                <div>
+                    <button type="submit">Search</button>
+                    <button id="clear">Clear</button>
+                </div>
+            </div>
+        </form>
+        <hr />
         <div>
-            <button type="submit">Search</button>
-            <button id="clear">Clear</button>
-        </div>
-      </div>
-    </form>
-    <hr />
-    <div>
-        <ol id="product-list">
+            <ol id="product-list">
 
-        </ol>
+            </ol>
+        </div>
     </div>
 
     <script>
@@ -66,6 +106,22 @@
                     e.preventDefault();
                     document.querySelector('#category').value = "";
                 });
+            }
+
+            const quoteParagraph = document.querySelector("#quote-paragraph");
+
+            if(quoteParagraph) {
+                function getQuote() {
+                    fetch(`/api/quote`)
+                        .then(response => response.json())
+                        .then(data => {
+                            quoteParagraph.innerHTML = data.value.quote;
+                        });
+                }
+
+                getQuote();
+
+                setInterval(() => getQuote(), 3000);
             }
 
             const searchForm = document.querySelector('#form-search-category');
